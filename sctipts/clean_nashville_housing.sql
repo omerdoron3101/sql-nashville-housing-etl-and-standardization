@@ -11,7 +11,14 @@
 			- Handling NULL values
 			- Deduplication
 			- Standardizing categorical columns
+
+   ⚠️ WARNING:
+	   This script is intended for one-time execution only.
+	   It performs operations such as dropping and renaming columns, which are irreversible.
+	   Running it multiple times without modification may result in errors or data loss.
+
    ====================================================================================== */
+
 
 /* ======================================================================================
    Convert 'SaleDate' Column to DATE Type
@@ -19,6 +26,7 @@
    Ensures the 'SaleDate' column is in proper SQL DATE format to enable accurate
    time-based calculations and analytics.
    ====================================================================================== */
+
 ALTER TABLE NashvilleHousing
 ADD SaleDateConverted DATE;
 GO
@@ -45,6 +53,7 @@ FROM NashvilleHousing
    ParcelID entries. Uses a self-join to copy addresses from other rows
    where the same ParcelID exists.
    ====================================================================================== */
+
 SELECT 
 	ta.ParcelID,
 	ta.PropertyAddress,
@@ -71,6 +80,7 @@ WHERE ta.PropertyAddress IS NULL;
    Extracts and stores street address and city in separate columns for easier analysis
    and reporting.
    ====================================================================================== */
+
 SELECT
 	PropertyAddress,
 	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address,
@@ -106,6 +116,7 @@ FROM NashvilleHousing;
    Uses PARSENAME with string replacement to parse 'OwnerAddress' into individual
    components, for separate column storage.
    ====================================================================================== */
+
 SELECT
 	OwnerAddress,
 	PARSENAME(REPLACE(OwnerAddress, ', ', '.'), 3) AS Address,
@@ -145,6 +156,7 @@ FROM NashvilleHousing;
    Converts categorical values 'Y'/'N' to 'Yes'/'No' for better readability
    and consistency in reporting and analysis.
    ====================================================================================== */
+
 SELECT DISTINCT
 	SoldAsVacant,
 	CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
@@ -169,6 +181,7 @@ FROM NashvilleHousing;
    Uses ROW_NUMBER() to identify duplicates based on key columns and deletes duplicate
    occurrences, keeping only unique instances.
    ====================================================================================== */
+
 WITH RowNumCTE AS (
 	SELECT *,
 		ROW_NUMBER() OVER(PARTITION BY ParcelID, PropertyAddress, SalePrice, SaleDate, LegalReference ORDER BY ParcelID) AS RowNum
@@ -189,6 +202,7 @@ WHERE RowNum > 1;
    Removes redundant columns that have been split or replaced to maintain
    a clean and normalized table structure.
    ====================================================================================== */
+
 ALTER TABLE NashvilleHousing
 DROP COLUMN PropertyAddress,
 			TaxDistrict,
