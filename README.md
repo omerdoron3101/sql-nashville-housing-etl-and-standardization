@@ -1,4 +1,4 @@
-# Nashville Housing ETL & Standardization
+# Nashville Housing ETL & Standardization Project
 
 This project focuses on cleaning, transforming, and standardizing a comprehensive housing dataset for Nashville properties. The main goal is to ensure data consistency, proper formatting, and readiness for advanced analytics and reporting.
 
@@ -61,6 +61,20 @@ After running this script, the `NashvilleHousing` table is:
 - Optimized for querying with separate columns for addresses and standardized categorical values.
 
 ---
+
+## 🛡️ License
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and share this project with proper attribution.
+
+---
+
+## 🌟 About Me
+👋 Hi! I'm **Omer Doron**  
+I’m a student of Information Systems specializing in **Digital Innovation**.  
+I’m passionate about transforming raw information into meaningful insights.  
+
+I created this project as part of my learning journey in **data warehousing and analytics**, and as a showcase of my **technical and analytical skills**.
+
+🔗 [Connect with me on LinkedIn](https://www.linkedin.com/in/omer-doron-a070732b1/)
 
 
 
